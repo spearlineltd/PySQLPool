@@ -6,6 +6,9 @@ PySQLPool is at the heart a MySQL Connection Pooling library for use with the Py
 Part of the PySQLPool is the MySQL Query class that handles all the thread safe connection locking,
 connection management in association with the Connection Manager, and cursor management.
 
+Please note that this is not maintained.  The 0.3.7 branch has been updated to handle Python 3 and is
+the new master branch, but we will be doing no further development on it.
+
 Installation
 ============
 
@@ -17,7 +20,7 @@ sudo python setup.py install
 How to Use PySQLPool
 ====================
 
-Documentation can be read locally at doc/index.rst or via the web at http://packages.python.org/PySQLPool
+Documentation can be read locally at doc/index.rst
 
 You can also generate your own html docs via the make file in doc/. This will produce the same docs as
 hosted on the website.
