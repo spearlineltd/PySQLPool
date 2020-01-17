@@ -5,7 +5,7 @@
 """
 
 from threading import Condition
-from PySQLConnection import PySQLConnectionManager
+from .PySQLConnection import PySQLConnectionManager
 
 class PySQLPool(object):
 	"""
@@ -37,10 +37,10 @@ class PySQLPool(object):
 		"""
 		self.__dict__ = self.__Pool
 		
-		if not self.__Pool.has_key('lock'):
+		if not 'lock' in self.__Pool:
 			self.__Pool['lock'] = Condition()
 			
-		if not self.__Pool.has_key('conn'):
+		if not 'conn' in self.__Pool:
 			self.__Pool['conn'] = {}
 		
 	def Terminate(self):
@@ -62,11 +62,11 @@ class PySQLPool(object):
 						self.__Pool['conn'][key][conn].lock.acquire()
 						try:
 							self.__Pool['conn'][key][conn].Close()
-						except Exception, e:
+						except Exception as e:
 							pass
 						self.__Pool['conn'][key][conn].lock.release()
 
-				except Exception, e:
+				except Exception as e:
 					pass
 			self.__Pool['conn'] = {}
 		finally:
@@ -90,10 +90,10 @@ class PySQLPool(object):
 						self.__Pool['conn'][key][conn].lock.acquire()
 						try:
 							self.__Pool['conn'][key][conn].TestConnection(forceCheck=True)
-						except Exception, e:
+						except Exception as e:
 							pass
 						self.__Pool['conn'][key][conn].lock.release()
-				except Exception, e:
+				except Exception as e:
 					pass
 		finally:
 			self.__Pool['lock'].release()
@@ -113,10 +113,10 @@ class PySQLPool(object):
 						self.__Pool['conn'][key][conn].lock.acquire()
 						try:
 							self.__Pool['conn'][key][conn].Commit()
-						except Exception, e:
+						except Exception as e:
 							pass
 						self.__Pool['conn'][key][conn].lock.release()
-				except Exception, e:
+				except Exception as e:
 					pass
 		finally:
 			self.__Pool['lock'].release()
@@ -141,7 +141,7 @@ class PySQLPool(object):
 		connection = None
 		
 		try:
-			if self.__Pool['conn'].has_key(key):
+			if key in self.__Pool['conn']:
 				for i in self.__Pool['conn'][key]:
 					#Grab an active connection if maxActivePerConnection is not meet
 					self.__Pool['conn'][key][i].lock.acquire()
@@ -157,7 +157,7 @@ class PySQLPool(object):
 							if self.__Pool['conn'][key][i].TestConnection() is False:
 								self.__Pool['conn'][key][i].ReConnect()
 							connection = self.__Pool['conn'][key][i]
-					except Exception, e:
+					except Exception as e:
 						self.__Pool['conn'][key][i].lock.release()
 						raise
 				if connection is None:

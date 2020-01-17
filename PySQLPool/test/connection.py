@@ -23,7 +23,7 @@ class Connection(unittest.TestCase):
 		"""
 		try:
 			connection = PySQLPool.PySQLConnection.PySQLConnection(host=self.host, user=self.username, passwd=self.password, db=self.db)
-		except Exception, e:
+		except Exception as e:
 			self.fail("Failed to create connection with error: "+str(e))
 
 	def testRawDictConnectionCreation(self):
@@ -37,7 +37,7 @@ class Connection(unittest.TestCase):
 					"passwd":self.password,
 					"db":self.db}
 			connection = PySQLPool.PySQLConnection.PySQLConnection(**connDict)
-		except Exception, e:
+		except Exception as e:
 			self.fail("Failed to create connection with error: "+str(e))
 	
 	def testQuickConnectionCreation(self):
@@ -46,7 +46,7 @@ class Connection(unittest.TestCase):
 		"""
 		try:
 			connection = PySQLPool.getNewConnection(host=self.host, user=self.username, passwd=self.password, db=self.db)
-		except Exception, e:
+		except Exception as e:
 			self.fail("Failed to create connection with error: "+str(e))
 	
 	def testQuickDictConnectionCreation(self):
@@ -60,7 +60,7 @@ class Connection(unittest.TestCase):
 					"passwd":self.password,
 					"db":self.db}
 			connection = PySQLPool.getNewConnection(**connDict)
-		except Exception, e:
+		except Exception as e:
 			self.fail("Failed to create connection with error: "+str(e))
 			
 	def testRawQueryCreation(self):
@@ -75,7 +75,7 @@ class Connection(unittest.TestCase):
 						"db":self.db}
 			connection = PySQLPool.getNewConnection(**connDict)
 			query = PySQLPool.PySQLQuery.PySQLQuery(connection)
-		except Exception, e:
+		except Exception as e:
 			self.fail('Failed to create PySQLQuery Object')
 			
 	def testQuickQueryCreation(self):
@@ -90,7 +90,7 @@ class Connection(unittest.TestCase):
 						"db":self.db}
 			connection = PySQLPool.getNewConnection(**connDict)
 			query = PySQLPool.getNewQuery(connection)
-		except Exception, e:
+		except Exception as e:
 			self.fail('Failed to create PySQLQuery Object')
 
 	def testDBConnection(self):
