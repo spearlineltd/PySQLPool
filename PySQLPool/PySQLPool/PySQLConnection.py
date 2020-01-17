@@ -2,7 +2,7 @@
 @author: Nick Verbeck
 @since: 5/12/2008
 """
-import MySQLdb
+import pymysql
 import datetime
 from threading import Semaphore
 
@@ -119,7 +119,7 @@ class PySQLConnectionManager(object):
 		@author: Nick Verbeck
 		@since: 5/12/2008
 		"""
-		self.connection = MySQLdb.connect(*[], **self.connectionInfo.info)
+		self.connection = pymysql.connect(*[], **self.connectionInfo.info)
 		self.updateCheckTime()
 		
 	def ReConnect(self):
@@ -145,7 +145,7 @@ class PySQLConnectionManager(object):
 		else:
 			if forceCheck is True or (datetime.datetime.now() - self.lastConnectionCheck) >= connection_timeout:
 				try:
-					cursor = self.connection.cursor(MySQLdb.cursors.DictCursor)
+					cursor = self.connection.cursor(pymysql.cursors.DictCursor)
 					cursor.execute('select current_user')
 					self.updateCheckTime()
 					return True

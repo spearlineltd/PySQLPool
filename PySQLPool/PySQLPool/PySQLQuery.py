@@ -4,7 +4,7 @@
 """
 
 import time
-import MySQLdb
+import pymysql
 from PySQLPool import PySQLPool
 import os.path
 
@@ -107,7 +107,7 @@ class PySQLQuery(object):
 				self.conn.query = query
 				
 				#Execute query and store results
-				cursor = self.conn.connection.cursor(MySQLdb.cursors.DictCursor)
+				cursor = self.conn.connection.cursor(pymysql.cursors.DictCursor)
 				self.affectedRows = cursor.execute(query, args)
 				self.lastInsertID = self.conn.connection.insert_id()
 				self.rowcount = cursor.rowcount
@@ -173,7 +173,7 @@ class PySQLQuery(object):
 				self._GetConnection()
 				self.conn.query = query
 				#Execute query
-				cursor = self.conn.connection.cursor(MySQLdb.cursors.DictCursor)
+				cursor = self.conn.connection.cursor(pymysql.cursors.DictCursor)
 				self.affectedRows = cursor.execute(query, args)
 				self.conn.updateCheckTime()
 				while 1:
@@ -219,7 +219,7 @@ class PySQLQuery(object):
 				self._GetConnection()
 				self.conn.query = query
 				#Execute query and store results
-				cursor = self.conn.connection.cursor(MySQLdb.cursors.DictCursor)
+				cursor = self.conn.connection.cursor(pymysql.cursors.DictCursor)
 				self.affectedRows = cursor.executemany(query, args)
 				self.conn.updateCheckTime()
 			except Exception, e:
@@ -251,7 +251,7 @@ class PySQLQuery(object):
 			try:
 				self._GetConnection()
 				#Execute query and store results
-				cursor = self.conn.connection.cursor(MySQLdb.cursors.DictCursor)
+				cursor = self.conn.connection.cursor(pymysql.cursors.DictCursor)
 				for query in queries:
 					self.conn.query = query
 					if query.__class__ == [].__class__:
@@ -304,31 +304,31 @@ class PySQLQuery(object):
 			
 	def escape_string(self, string):
 		"""
-		This is just an adapter function to allow previus users of MySQLdb. 
+		This is just an adapter function to allow previus users of pymysql. 
 		To be familier with there names of functions.
 		
 		@see: escapeString
 		"""
-		return MySQLdb.escape_string(string)
+		return pymysql.escape_string(string)
 	
 	def escapeString(self, string):
 		"""
 		Escapes a string for use in a query
 		
-		This is the equivilate and MySQLdb.escape_string()
+		This is the equivilate and pymysql.escape_string()
 		
 		@author: Nick Verbeck
 		@since: 9/7/2008
 		"""
-		return MySQLdb.escapeString(string)
+		return pymysql.escapeString(string)
 	
 	def escape(self, string):
 		"""
 		Escapes a string for use in a query
 		
-		This is the equivilate and MySQLdb.escape()
+		This is the equivilate and pymysql.escape()
 		
 		@author: Nick Verbeck
 		@since: 9/7/2008
 		"""
-		return MySQLdb.escape(string)
+		return pymysql.escape(string)
